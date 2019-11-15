@@ -2,10 +2,11 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import router from '../router'
+import {verifyToken} from '../helpers/jwt'
 
 Vue.use(Vuex)
 
-const baseUrl = "http://localhost:3000"
+const baseUrl = "http://34.87.107.88"
 
 export default new Vuex.Store({
  state: {
@@ -19,15 +20,18 @@ export default new Vuex.Store({
  actions: {
    login(context, payload) {
       axios({
-        method: 'GET',
-        url: `${baseUrl}/user`
+        method: 'POST',
+        url: `${baseUrl}/user/login`,
+        data: payload
       })
       .then(({data}) => {
-        console.log(data)
-        context.commit('SET_LOGIN', data[0].id)
-        localStorage.setItem('id', data[0].id)
-        localStorage.setItem('token', data[0].id)
-        router.push('/dashboard')
+        const user = verifyToken(data.token)
+        console.log(user)
+        context.commit('SET_LOGIN', data.token)
+        localStorage.setItem('token', data.token)
+        if(data.isOwner) {
+          router.push('/dashboard')
+        }
       })
       .catch(console.log)
    }

@@ -1,27 +1,17 @@
 <template>
     <div class="wrapper">
         <div class="left">
+          <img src="../../assets/bowl.png" alt="">
         </div>
         <div class="right">
             <div style="width: 50%;" v-if="Login">
                 <p class="label">Login</p>
                 <form @submit.prevent="login">
-                    <input v-model="email" type="text" placeholder="Email">
+                    <input v-model="username" type="text" placeholder="Username">
                     <input v-model="password" type="password" placeholder="Password">
                     <button type="submit">Sign In</button>
                 </form>
-                <a class="link" href="" @click.prevent="switchForm">Don't have an account?</a>
 
-            </div>
-            <div style="width: 50%;" v-else>
-                <p class="label">Create a new account</p>
-                <form @submit.prevent="register" >
-                    <input v-model="email" type="text" placeholder="Email">
-                    <input v-model="username" type="text" placeholder="Username">
-                    <input v-model="password" type="password" placeholder="Password">
-                    <button type="submit">Sign Up</button>
-                </form>
-                <a class="link" href="" @click.prevent="switchForm">Have an account?</a>
             </div>
         </div>
     </div>
@@ -32,28 +22,14 @@ export default {
     data: function(){
         return {
             username: "",
-            email: "",
             password: "",
             Login: true
         }
     },
     methods: {
-        switchForm(){
-            this.username = ""
-            this.email = ""
-            this.password = ""
-            if(this.Login) this.Login = false
-            else this.Login = true
-        },
         login(){
-            this.$store.dispatch('login')
+            this.$store.dispatch('login', {username: this.username, password: this.password})
         },
-        register(){
-            this.$store.dispatch('register', {email: this.email, password: this.password, username: this.username})
-            .then(_=>{
-                this.Login = true;
-            })
-        }
     }
 }
 </script>
@@ -88,7 +64,7 @@ export default {
         
     }
     .right, .left {
-        margin-top: 10vh;
+        margin-top: 20vh;
         width: 100%;
         display: flex;
         justify-content: center;

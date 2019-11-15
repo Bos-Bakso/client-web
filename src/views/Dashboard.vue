@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="content">
+
       <!-- Header Dashboard -->
       <DashboardHeader />
 
@@ -59,7 +60,6 @@
         <!-- CHART -->
         <div class="row chart-content" style="padding">
           <div class="col-md-6">
-
             <div class="card" style="padding: 2rem;">
               <h4 id="chart-title">Sales Chart</h4>
               <SalesChart />
@@ -74,15 +74,14 @@
           </div>
         </div>
 
-
         <!-- MAPS -->
         <div class="row maps-container">
-           <div class="col-md-3">
-            <ListAbang/>
+          <div class="col-md-3">
+            <ListAbang />
           </div>
           <div class="col-md-6">
             <div class="card">
-              <Maps style="height: 60vh;"/>
+              <Maps style="height: 60vh;" />
             </div>
           </div>
         </div>
@@ -94,8 +93,9 @@
 <script>
 import DashboardHeader from "../components/DashboardHeader";
 import SalesChart from "../components/SalesChart";
-import Maps from "../components/Maps"
-import ListAbang from "../components/ListLoginAbang"
+import Maps from "../components/Maps";
+import ListAbang from "../components/ListLoginAbang";
+
 
 export default {
   components: { DashboardHeader, SalesChart, Maps, ListAbang },
