@@ -17,7 +17,7 @@
                 </div>
                 <p class="card__category">Revenue</p>
                 <h3 class="card__title">
-                  IDR 49,500
+                  IDR {{totalIncome}}
                   <small></small>
                 </h3>
               </div>
@@ -49,7 +49,7 @@
                 </div>
                 <p class="card__category">Total Abang</p>
                 <h3 class="card__title">
-                  213
+                  {{totalAbang}}
                   <small></small>
                 </h3>
               </div>
@@ -101,13 +101,45 @@ export default {
   components: { DashboardHeader, SalesChart, Maps, ListAbang },
   data: function() {
     return {
-      cardTitle: [
-        { title: "Total Abang", desc: "Total Abang Bako registered", data: 20 },
-        { title: "Sales", desc: "Total profit", data: 120 },
-        { title: "Total spent", desc: "Total profit", data: 120 }
-      ]
+      totalAbang: 0,
+      totalIncome: 0,
+      listabangs: [],
+      lisTransactions: [],
+      topRankAbang: [],
     };
-  }
+  },
+  methods: {
+    topAbang: function(abangs, transactions) {
+      const arr = []
+      const obj = {
+        abang: null,
+      }
+
+      abangs.forEach(abang => {
+        const totalTransactions = transactions.filter(el => el.tukangBaksoId == abang._id)
+
+        abang.totalBakso = totalTransactions.length
+        this.topRankAbang.push(abang)
+      })   
+      
+      console.log(this.topRankAbang)
+    },
+  },
+  created(){
+      window.scrollTo(0, 0)
+      this.$store.dispatch('getTotalAbang')
+        .then((data) => {
+          this.listabangs = data
+          this.totalAbang = data.length
+          return this.$store.dispatch('getTransactions')
+        })
+        .then((data) => {
+          this.lisTransactions = data.penjualanBakso
+          this.totalIncome = data.penjualanBakso.length * 15000
+          this.topAbang(this.listabangs, this.lisTransactions)
+        })
+
+  } 
 };
 </script>
 

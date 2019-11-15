@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 import axios from 'axios'
 import router from '../router'
 import {verifyToken} from '../helpers/jwt'
+import { resolve } from 'path'
+import { reject } from 'q'
 
 Vue.use(Vuex)
 
@@ -25,8 +27,6 @@ export default new Vuex.Store({
         data: payload
       })
       .then(({data}) => {
-        const user = verifyToken(data.token)
-        console.log(user)
         context.commit('SET_LOGIN', data.token)
         localStorage.setItem('token', data.token)
         if(data.isOwner) {
@@ -34,7 +34,38 @@ export default new Vuex.Store({
         }
       })
       .catch(console.log)
-   }
+   },
+   getTotalAbang(context, payload) {
+     console.log(localStorage.getItem('token'))
+     return new Promise((resolve, reject) => {
+       axios({
+         method: 'GET',
+         url: `${baseUrl}/user/`,
+         headers: {
+           token: localStorage.getItem('token')
+         }
+       })
+       .then(({data})  => {
+         resolve(data)
+       })
+       .catch(console.log)
+     })
+   },
+   getTransactions(context, payload) {
+    return new Promise((resolve, reject) => {
+      axios({
+        method: 'GET',
+        url: `${baseUrl}/transaction/`,
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+      .then(({data}) => {
+        resolve(data)
+      })
+      .catch(console.log)
+    })
+   },
  },
  modules: {
  }
