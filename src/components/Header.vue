@@ -2,12 +2,7 @@
   <div class="header">
     <div class="info">
       <div class="title-dashboard">
-        <Push class="bm">
-          <a id="home" href="#">
-            <span>Home</span>
-          </a>
-        </Push>
-        <h4 class="main-title">Dashboard</h4>
+        <h4 class="main-title">{{this.$store.state.headerTitle}}</h4>
       </div>
       <div class="user-info">
         <div class="user-icon" style="margin-left: 50px;">
@@ -19,11 +14,16 @@
       </div>
     </div>
 
-    <!-- <div class="welcome">
-        <div>
-          <h1>Welcome Bos Bakso</h1>
-        </div>
-    </div>-->
+    <div class="welcome">
+      <div class="btn">
+        <router-link to="/dashboard">Dashboard</router-link>
+      </div>
+
+      <div class="btn">
+        <router-link to="/add">Add Abang</router-link>
+
+      </div>
+    </div>
   </div>
 </template>
 
@@ -37,14 +37,14 @@ export default {
 
 <style>
 .header {
-  height: 8vh;
+  height: 14vh;
   width: 100%;
   background: #ffffff;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
 }
 
 .info {
-  height: 8vh;
+  height: 7vh;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
   display: flex;
   justify-content: space-between;
@@ -63,13 +63,16 @@ h4.main-title {
   justify-content: right;
 }
 
-/* .welcome {
-    height: 7vh;
-    padding: 20px
-  } */
+.welcome {
+  height: 7vh;
+  padding: 20px;
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  .bm {
-    width: 1rem;
-    height: 1rem;
-  }
+.btn {
+  font-size: 2rem !important;
+}
 </style>

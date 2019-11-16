@@ -2,9 +2,6 @@
   <div>
     <div class="content">
 
-      <!-- Header Dashboard -->
-      <DashboardHeader />
-
       <!-- Highlight Info 3 cards -->
       <div class="cotainer-fluid">
         <div class="row highlight-info" style="width: 100%; padding:0;">
@@ -94,7 +91,6 @@
 </template>
 
 <script>
-import DashboardHeader from "../components/DashboardHeader";
 import SalesChart from "../components/SalesChart";
 import Maps from "../components/Maps";
 import ListAbang from "../components/ListLoginAbang";
@@ -102,7 +98,7 @@ import TopAbang from "../components/TopRankAbang"
 
 
 export default {
-  components: { DashboardHeader, SalesChart, Maps, ListAbang, TopAbang },
+  components: { SalesChart, Maps, ListAbang, TopAbang },
   data: function() {
     return {
       totalAbang: 0,

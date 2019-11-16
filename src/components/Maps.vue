@@ -10,27 +10,23 @@
       @update:zoom="zoomUpdate"
     >
       <l-tile-layer :url="url" />
-      <l-marker :lat-lng="tukang1" :icon="icon">
-        <l-popup>
-          <div @click="innerClick">
-            I am a popup
-            <p v-show="showParagraph">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-              sed pretium nisl, ut sagittis sapien. Sed vel sollicitudin nisi.
-              Donec finibus semper metus id malesuada.
-            </p>
-          </div>
-        </l-popup>
-      </l-marker>
-      <l-marker :lat-lng="tukang2" :icon="icon"></l-marker>
+      <l-marker
+        v-for="(tukang, index) in tukangs"
+        :key="index"
+        :lat-lng="latLng(tukang.latitude, tukang.longitude)"
+        :icon="icon(tukang.image)"
+        @click="innerClick(latLng(tukang.latitude, tukang.longitude))"
+      ></l-marker>
     </l-map>
   </div>
 </template>
+
 <script>
-import { latLng, icon } from "leaflet";
-import { LMap, LTileLayer, LMarker, LPopup, LTooltip } from "vue2-leaflet";
+import { latLng, icon } from 'leaflet';
+import { LMap, LTileLayer, LMarker, LPopup, LTooltip } from 'vue2-leaflet';
+
 export default {
-  name: "Example",
+  name: 'Example',
   components: {
     LMap,
     LTileLayer,
@@ -38,43 +34,79 @@ export default {
     LPopup,
     LTooltip
   },
-  data() {
+  data () {
     return {
       zoom: 13,
-      center: latLng(-6.180586, 106.828136),
-      url: "http://{s}.tile.osm.org/{z}/{x}/{y}.png",
+      center: latLng(-6.2607371, 106.7815033),
+      url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-      tukang1: latLng(-6.180586, 106.828136),
-      tukang2: latLng(-6.180586, 106.8284),
-      currentZoom: 11.5,
-      currentCenter: latLng(47.41322, -1.219482),
+      // tukangs: [
+      //   {
+      //     name: 'bambang',
+      //     lat: -6.2607371,
+      //     lng: 106.7815033,
+      //     icon:
+      //       'https://i2.wp.com/www.coachcarson.com/wp-content/uploads/2018/09/Chad-Profile-pic-circle.png?ssl=1'
+      //   },
+      //   {
+      //     name: 'sono',
+      //     lat: -6.2607471,
+      //     lng: 106.7715433,
+      //     icon:
+      //       'https://www.iphonesavvy.com/sites/default/files/%5Bcurrent-date%3Afile_path%5D/jan-profile-circle.png'
+      //   }
+      // ],
+      currentZoom: 13,
+      currentCenter: latLng(-6.2607371, 106.7815033),
       showParagraph: false,
       mapOptions: {
         zoomSnap: 0.5
       },
-      showMap: true,
-      icon: icon({
-        iconUrl:
-          "https://cdn.pixabay.com/photo/2016/07/27/03/38/culinary-1544525_960_720.png",
-        iconSize: [24, 18],
-        iconAnchor: [16, 37]
-      })
-    };
+      showMap: true
+    }
   },
   methods: {
-    zoomUpdate(zoom) {
-      this.currentZoom = zoom;
+    icon (url) {
+      return icon({
+        iconUrl: url,
+        iconSize: [30, 30],
+        iconAnchor: [30, 30]
+      })
     },
-    centerUpdate(center) {
-      this.currentCenter = center;
+    latLng (lat, lng) {
+      return latLng(lat, lng)
     },
-    showLongText() {
-      this.showParagraph = !this.showParagraph;
+    zoomUpdate (zoom) {
+      this.currentZoom = zoom
+      this.zoom = zoom
     },
-    innerClick() {
-      alert("Click!");
+    centerUpdate (center) {
+      this.currentCenter = center
+      this.center = center
+    },
+    showLongText () {
+      this.showParagraph = !this.showParagraph
+    },
+    innerClick (loc) {
+      this.center = loc
+      this.currentCenter = loc
+      this.zoom = 20
+      this.currentZoom = 20
+    }
+  },
+  created () {
+    this.$store.dispatch('fetchTukangs')
+  },
+  mounted () {
+    setInterval(() => {
+      this.$store.dispatch('fetchTukangs')
+    }, 10000)
+  },
+  computed: {
+    tukangs () {
+      return this.$store.state.tukangs
     }
   }
-};
+}
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="row" style="margin-top:1.6rem;       box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
+  <div class="row" style="margin-top:1.6rem; box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
 ">
     <div class="myCard">
       <div class="myInfo">
@@ -17,7 +17,7 @@
           <i class="fas fa-medal" style="color: #D1873C; font-size: 4rem;"></i>
         </div>
         <div v-else> 
-
+          <i class="fas fa-medal" style="color: #262626; font-size: 4rem;"></i>
         </div>
       </div>
     </div>
@@ -57,7 +57,7 @@ export default {
   }
 
   .myInfo img {
-    width: 70px;
+    width: 60px;
     height: 100%;
     border-radius: 50%;
       box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
