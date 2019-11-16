@@ -68,7 +68,10 @@
           <div class="col-md-3">
             <div class="card" style="height: 473px; padding: 2rem;">
               <div class="rank-title">
-                <h4 id="chart-title">Top Abang</h4>
+                <h4 id="chart-title" style="margin-bottom: 25px;">Top Abang</h4>
+                <div id="topAbang">
+                  <TopAbang v-for="(abang, index) in topRankAbang" :key="abang._id" :abanginfo="abang" :rank="index"/> 
+                </div>
               </div>
             </div>
           </div>
@@ -95,10 +98,11 @@ import DashboardHeader from "../components/DashboardHeader";
 import SalesChart from "../components/SalesChart";
 import Maps from "../components/Maps";
 import ListAbang from "../components/ListLoginAbang";
+import TopAbang from "../components/TopRankAbang"
 
 
 export default {
-  components: { DashboardHeader, SalesChart, Maps, ListAbang },
+  components: { DashboardHeader, SalesChart, Maps, ListAbang, TopAbang },
   data: function() {
     return {
       totalAbang: 0,
@@ -109,7 +113,7 @@ export default {
     };
   },
   methods: {
-    topAbang: function(abangs, transactions) {
+    listAbang: function(abangs, transactions) {
       const arr = []
       const obj = {
         abang: null,
@@ -121,9 +125,14 @@ export default {
         abang.totalBakso = totalTransactions.length
         this.topRankAbang.push(abang)
       })   
-      
-      console.log(this.topRankAbang)
+      this.sortAbang(this.topRankAbang)
     },
+    sortAbang(arr) {
+      const sorted = []
+
+      arr.sort((a, b) => b.totalBakso - a.totalBakso )
+      this.$store.commit('SET_ABANG_BAKSO', arr)
+    }
   },
   created(){
       window.scrollTo(0, 0)
@@ -136,7 +145,7 @@ export default {
         .then((data) => {
           this.lisTransactions = data.penjualanBakso
           this.totalIncome = data.penjualanBakso.length * 15000
-          this.topAbang(this.listabangs, this.lisTransactions)
+          this.listAbang(this.listabangs, this.lisTransactions)
         })
 
   } 
@@ -289,5 +298,12 @@ export default {
 .maps-container {
   display: flex;
   justify-content: center;
+}
+
+#topAbang {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 </style>
