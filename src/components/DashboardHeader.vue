@@ -28,11 +28,11 @@
 </template>
 
 <script>
-import { Push } from "vue-burger-menu";
+import { Push } from 'vue-burger-menu'
 export default {
-  props: ["titleCard"],
+  props: ['titleCard'],
   components: { Push }
-};
+}
 </script>
 
 <style>

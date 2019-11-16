@@ -91,24 +91,23 @@
 </template>
 
 <script>
-import DashboardHeader from "../components/DashboardHeader";
-import SalesChart from "../components/SalesChart";
-import Maps from "../components/Maps";
-import ListAbang from "../components/ListLoginAbang";
-
+import DashboardHeader from '../components/DashboardHeader'
+import SalesChart from '../components/SalesChart'
+import Maps from '../components/Maps'
+import ListAbang from '../components/ListLoginAbang'
 
 export default {
   components: { DashboardHeader, SalesChart, Maps, ListAbang },
-  data: function() {
+  data: function () {
     return {
       cardTitle: [
-        { title: "Total Abang", desc: "Total Abang Bako registered", data: 20 },
-        { title: "Sales", desc: "Total profit", data: 120 },
-        { title: "Total spent", desc: "Total profit", data: 120 }
+        { title: 'Total Abang', desc: 'Total Abang Bako registered', data: 20 },
+        { title: 'Sales', desc: 'Total profit', data: 120 },
+        { title: 'Total spent', desc: 'Total profit', data: 120 }
       ]
-    };
+    }
   }
-};
+}
 </script>
 
 <style scoped>

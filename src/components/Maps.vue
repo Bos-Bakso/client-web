@@ -98,6 +98,11 @@ export default {
   created () {
     this.$store.dispatch('fetchTukangs')
   },
+  mounted () {
+    setInterval(() => {
+      this.$store.dispatch('fetchTukangs')
+    }, 10000)
+  },
   computed: {
     tukangs () {
       return this.$store.state.tukangs

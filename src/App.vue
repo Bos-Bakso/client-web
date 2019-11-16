@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
-      
+
     </div>
     <router-view/>
   </div>
@@ -14,7 +14,7 @@
     margin: 0;
     padding: 0;
   }
-  
+
   #app {
     background: #F6F6F6;
     width: 100%;

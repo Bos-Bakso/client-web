@@ -29,8 +29,6 @@ export default new Vuex.Store({
         data: payload
       })
         .then(({ data }) => {
-          const user = verifyToken(data.token)
-          // console.log(user)
           context.commit('SET_LOGIN', data.token)
           localStorage.setItem('token', data.token)
           if (data.isOwner) {
@@ -42,10 +40,14 @@ export default new Vuex.Store({
     fetchTukangs (context, payload) {
       axios({
         method: 'GET',
-        url: `${baseUrl}/user/`
+        url: `${baseUrl}/user/`,
+        headers: {
+          token: localStorage.getItem('token')
+        }
       })
         .then(({ data }) => {
           context.commit('SET_TUKANGS', data)
+          console.log('fetch')
         })
         .catch(console.log)
     }

@@ -19,18 +19,18 @@
 
 <script>
 export default {
-    data: function(){
-        return {
-            username: "",
-            password: "",
-            Login: true
-        }
-    },
-    methods: {
-        login(){
-            this.$store.dispatch('login', {username: this.username, password: this.password})
-        },
+  data: function () {
+    return {
+      username: '',
+      password: '',
+      Login: true
     }
+  },
+  methods: {
+    login () {
+      this.$store.dispatch('login', { username: this.username, password: this.password })
+    }
+  }
 }
 </script>
 
@@ -61,7 +61,7 @@ export default {
         width: 70%;
         height: 50%;
         object-fit: contain;
-        
+
     }
     .right, .left {
         margin-top: 20vh;
@@ -84,7 +84,7 @@ export default {
     }
     input, button {
         margin-bottom: 2vh;
-        padding: 1vh 0.5vw;  
+        padding: 1vh 0.5vw;
         font-size: 1rem;
     }
 </style>
