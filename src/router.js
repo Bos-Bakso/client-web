@@ -16,23 +16,21 @@ export default new Router({
     },
     {
       path: '/dashboard',
-      name: 'about',
+      name: 'dashboard',
       component: () => import('./views/Dashboard.vue'),
       beforeEnter: (to, from, next) => {
         if(store.state.isLogin) {
-          store.commit('SET_HEADER_TITLE', 'Dashboard')
           next()
         }
         else next('/')
       }
     },
     {
-      path: '/add',
-      name: 'about',
-      component: () => import('./views/AddAbang.vue'),
+      path: '/maps',
+      name: 'maps',
+      component: () => import('./views/MapsContainer.vue'),
       beforeEnter: (to, from, next) => {
         if(store.state.isLogin) {
-          store.commit('SET_HEADER_TITLE', 'Add Abang')
           next()
         }
         else next('/')

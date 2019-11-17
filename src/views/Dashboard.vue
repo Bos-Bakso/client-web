@@ -75,16 +75,6 @@
         </div>
 
         <!-- MAPS -->
-        <div class="row maps-container">
-          <div class="col-md-3">
-            <ListAbang />
-          </div>
-          <div class="col-md-6">
-            <div class="card">
-              <Maps style="height: 60vh;" />
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>

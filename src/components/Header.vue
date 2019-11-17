@@ -1,15 +1,19 @@
 <template>
   <div class="header">
+    
     <div class="info">
-      <div class="title-dashboard">
-        <h4 class="main-title">{{this.$store.state.headerTitle}}</h4>
+      <div class="title-header">
+        <img src="../../assets/bowl.png" alt="" style="width: 60px; height: 100%; margin-right: 20px;">
+        <h4 class="main-title">BosBaso</h4>
       </div>
       <div class="user-info">
         <div class="user-icon" style="margin-left: 50px;">
-          <i class="fas fa-user" style="color: black; width: 100%; font-size: 2rem;"></i>
+            <img :src="this.$store.state.imageBos" alt="" id="imgBos">
         </div>
         <div id="notif">
           <h4>Bell</h4>
+          <div>
+          </div>
         </div>
       </div>
     </div>
@@ -20,8 +24,15 @@
       </div>
 
       <div class="btn">
-        <router-link to="/add">Add Abang</router-link>
+        <router-link to="/maps">Maps</router-link>
+      </div>
 
+      <div class="btn">
+        <router-link to="/add">Add Abang</router-link>
+      </div>
+
+      <div class="btn" @click="logout()">
+        <router-link to="/">Logout</router-link>
       </div>
     </div>
   </div>
@@ -31,7 +42,13 @@
 import { Push } from "vue-burger-menu";
 export default {
   props: ["titleCard"],
-  components: { Push }
+  components: { Push },
+  methods: {
+    logout() {
+      localStorage.removeItem('token')
+      this.$store.commit('SET_LOGIN', false)
+    }
+  }
 };
 </script>
 
@@ -49,7 +66,12 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 70px;
+  padding: 0 23rem;
+}
+
+.title-header {
+  display: flex;
+  align-items: center;
 }
 
 h4.main-title {
@@ -61,6 +83,8 @@ h4.main-title {
   display: flex;
   flex-direction: row-reverse;
   justify-content: right;
+
+  align-items: center;
 }
 
 .welcome {
@@ -74,5 +98,12 @@ h4.main-title {
 
 .btn {
   font-size: 2rem !important;
+}
+
+#imgBos {
+  border-radius: 50%;
+  width: 60px;
+  height: 100%;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
 }
 </style>

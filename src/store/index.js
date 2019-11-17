@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import router from '../router'
+import {verifyToken} from "../helpers/jwt"
 
 
 Vue.use(Vuex)
@@ -13,7 +14,7 @@ export default new Vuex.Store({
     isLogin: (localStorage.getItem('token') ? true : false),
     listAbangBakso: [],
     tukangs: [],
-    headerTitle: 'Dashboard'
+    imageBos: null,
   },
   mutations: {
     SET_LOGIN(state, data) {
@@ -25,25 +26,32 @@ export default new Vuex.Store({
     SET_TUKANGS(state, data) {
       state.tukangs = data
     },
-    SET_HEADER_TITLE(state, data) {
-      state.headerTitle = data
+    SET_BOS_IMAGE(state, data) {
+      state.imageBos = data
     }
   },
   actions: {
     login(context, payload) {
-      axios({
-        method: 'POST',
-        url: `${baseUrl}/user/login`,
-        data: payload
-      })
-        .then(({ data }) => {
-          context.commit('SET_LOGIN', data.token)
-          localStorage.setItem('token', data.token)
-          if (data.isOwner) {
-            router.push('/dashboard')
-          }
+      return new Promise((resolve, reject) => {
+
+        axios({
+          method: 'POST',
+          url: `${baseUrl}/user/login`,
+          data: payload
         })
-        .catch(console.log)
+          .then(({ data }) => {
+            const user = verifyToken(data.token)
+
+            context.commit('SET_LOGIN', data.token)
+            localStorage.setItem('token', data.token)
+
+            if (data.isOwner) {
+              router.push('/dashboard')
+            }
+            resolve(user)
+          })
+          .catch(console.log)
+      })
     },
     getTotalAbang(context, payload) {
       console.log(localStorage.getItem('token'))
@@ -77,7 +85,16 @@ export default new Vuex.Store({
       })
     },
     addAbang(context, payload) {
-
+      axios({
+        method: 'POST',
+        url: `${baseUrl}/user/add/`,
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+      .then(_ => {
+        
+      })
     },
     fetchTukangs(context, payload) {
       axios({
@@ -92,7 +109,7 @@ export default new Vuex.Store({
           console.log('fetch')
         })
         .catch(console.log)
-    }
+    },
   },
   modules: {}
 })

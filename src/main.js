@@ -5,7 +5,7 @@ import store from './store'
 
 import BootstrapVue from 'bootstrap-vue'
 
-import 'bootstrap/dist/css/bootstrap.css'
+import './assets/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 // Leaflet

@@ -1,7 +1,10 @@
 <template>
   <div id="app">
     <div id="nav">
-      <Header/>
+      <div v-if="this.$store.state.isLogin">
+
+        <Header />
+      </div>
     </div>
     <router-view/>
   </div>
