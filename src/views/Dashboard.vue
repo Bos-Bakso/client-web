@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="content">
-
       <!-- Highlight Info 3 cards -->
       <div class="cotainer-fluid">
         <div class="row highlight-info" style="width: 100%; padding:0;">
@@ -14,7 +13,7 @@
                 </div>
                 <p class="card__category">Revenue</p>
                 <h3 class="card__title">
-                  IDR {{totalIncome}}
+                  IDR {{nFormatter}}
                   <small></small>
                 </h3>
               </div>
@@ -66,8 +65,13 @@
             <div class="card" style="height: 473px; padding: 2rem;">
               <div class="rank-title">
                 <h4 id="chart-title" style="margin-bottom: 25px;">Top Abang</h4>
-                <div id="topAbang">
-                  <TopAbang v-for="(abang, index) in topRankAbang" :key="abang._id" :abanginfo="abang" :rank="index"/> 
+                <div class="topAbang" id="style-3">
+                  <TopAbang
+                    v-for="(abang, index) in topRankAbang"
+                    :key="abang._id"
+                    :abanginfo="abang"
+                    :rank="index"
+                  />
                 </div>
               </div>
             </div>
@@ -84,8 +88,7 @@
 import SalesChart from "../components/SalesChart";
 import Maps from "../components/Maps";
 import ListAbang from "../components/ListLoginAbang";
-import TopAbang from "../components/TopRankAbang"
-
+import TopAbang from "../components/TopRankAbang";
 
 export default {
   components: { SalesChart, Maps, ListAbang, TopAbang },
@@ -95,46 +98,69 @@ export default {
       totalIncome: 0,
       listabangs: [],
       lisTransactions: [],
-      topRankAbang: [],
+      topRankAbang: []
     };
   },
   methods: {
     listAbang: function(abangs, transactions) {
-      const arr = []
+      const arr = [];
       const obj = {
-        abang: null,
-      }
+        abang: null
+      };
 
       abangs.forEach(abang => {
-        const totalTransactions = transactions.filter(el => el.tukangBaksoId == abang._id)
+        const totalTransactions = transactions.filter(
+          el => el.tukangBaksoId == abang._id
+        );
 
-        abang.totalBakso = totalTransactions.length
-        this.topRankAbang.push(abang)
-      })   
-      this.sortAbang(this.topRankAbang)
+        abang.totalBakso = totalTransactions.length;
+        this.topRankAbang.push(abang);
+      });
+      this.sortAbang(this.topRankAbang);
     },
     sortAbang(arr) {
-      const sorted = []
+      const sorted = [];
 
-      arr.sort((a, b) => b.totalBakso - a.totalBakso )
-      this.$store.commit('SET_ABANG_BAKSO', arr)
+      arr.sort((a, b) => b.totalBakso - a.totalBakso);
+      this.$store.commit("SET_ABANG_BAKSO", arr);
     }
   },
-  created(){
-      window.scrollTo(0, 0)
-      this.$store.dispatch('getTotalAbang')
-        .then((data) => {
-          this.listabangs = data
-          this.totalAbang = data.length
-          return this.$store.dispatch('getTransactions')
-        })
-        .then((data) => {
-          this.lisTransactions = data.penjualanBakso
-          this.totalIncome = data.penjualanBakso.length * 15000
-          this.listAbang(this.listabangs, this.lisTransactions)
-        })
-
-  } 
+  created() {
+    window.scrollTo(0, 0);
+    this.$store
+      .dispatch("getTotalAbang")
+      .then(data => {
+        this.listabangs = data;
+        this.totalAbang = data.length;
+        return this.$store.dispatch("getTransactions");
+      })
+      .then(data => {
+        this.lisTransactions = data.penjualanBakso;
+        this.totalIncome = data.penjualanBakso.length * 15000;
+        this.listAbang(this.listabangs, this.lisTransactions);
+      });
+  },
+  computed: {
+    nFormatter: function() {
+      var si = [
+        { value: 1, symbol: "" },
+        { value: 1e3, symbol: "K" },
+        { value: 1e6, symbol: "M" },
+        { value: 1e9, symbol: "G" },
+        { value: 1e12, symbol: "T" },
+        { value: 1e15, symbol: "P" },
+        { value: 1e18, symbol: "E" }
+      ];
+      var rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+      var i;
+      for (i = si.length - 1; i > 0; i--) {
+        if (this.totalIncome >= si[i].value) {
+          break;
+        }
+      }
+      return (this.totalIncome / si[i].value).toFixed(1).replace(rx, "$1") + si[i].symbol;
+    }
+  }
 };
 </script>
 
@@ -286,8 +312,22 @@ export default {
   justify-content: center;
 }
 
-#topAbang {
+.topAbang {
   height: 390px;
   overflow: auto;
+}
+
+#style-3::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #f5f5f5;
+}
+
+#style-3::-webkit-scrollbar {
+  width: 6px;
+  background-color: #f5f5f5;
+}
+
+#style-3::-webkit-scrollbar-thumb {
+  background-color: #000000;
 }
 </style>

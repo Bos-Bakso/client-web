@@ -17,7 +17,7 @@
           <i class="fas fa-medal" style="color: #D1873C; font-size: 4rem;"></i>
         </div>
         <div v-else> 
-          <i class="fas fa-medal" style="color: #262626; font-size: 4rem;"></i>
+          <i class="fas fa-medal" style="color: #262626; font-size: 4rem; opacity: 0.8;"></i>
         </div>
       </div>
     </div>

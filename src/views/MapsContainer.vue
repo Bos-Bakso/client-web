@@ -18,7 +18,7 @@
               <div class="addAbang">
                 <div class="btn btn-warning btn-sm add-btn" @click="addAbang">Add +</div>
               </div>
-              <div id="topAbang" style="width: 100%; height: 500px; overflow: auto;">
+              <div class="topAbang" id="style-3" style="width: 100%; height: 500px; overflow: auto;">
                 <div v-if="filter().length === 0">
                   <p id="notFound">Abang not found</p>
                 </div>
@@ -37,7 +37,7 @@
               <div class="addAbang">
                 <div class="btn btn-danger btn-sm add-btn" @click="cancelAdd">Cancel</div>
               </div>
-              <div id="topAbang" style="width: 100%;">
+              <div class="topAbang" style="width: 100%;">
                 <form @submit.prevent="newAbang" class="myForm">
                   <input class="form-control" v-model="username" type="text" placeholder="Username" />
                   <input
@@ -55,7 +55,8 @@
                       required
                     />
                   </form>
-                  <button @click.prevent="newAbang" type="submit" class="btn btn-primary">Submit</button>
+                  <button  v-if="loading === false" @click.prevent="newAbang" type="submit" class="btn btn-primary">Submit</button>
+                  <button v-else type="submit"  @click.prevent="" class="btn btn-primary"><i class="fas fa-spinner fa-pulse" style="font-size: 1.5rem;"></i></button>
                 </form>
               </div>
             </div>
@@ -80,6 +81,7 @@ export default {
       username: "",
       password: "",
       image: "",
+      loading: false
     };
   },
   methods: {
@@ -103,6 +105,7 @@ export default {
       this.image = this.$refs.image.files[0];
     },
     newAbang() {
+      this.loading = true
       let formData = new FormData()
 
       formData.append('username', this.username)
@@ -111,6 +114,10 @@ export default {
 
       this.$store.dispatch("addAbang", formData)
         .then(_ => {
+          this.loading = false
+          this.username = ""
+          this.password = ""
+          
           this.getAbang()
           this.showForm = false
           this.$toasted.show("New Abang Added", {
@@ -191,5 +198,22 @@ button {
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
+}
+
+#style-3::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+
+#style-3::-webkit-scrollbar
+{
+	width: 6px;
+	background-color: #F5F5F5;
+}
+
+#style-3::-webkit-scrollbar-thumb
+{
+	background-color: #000000;
 }
 </style>

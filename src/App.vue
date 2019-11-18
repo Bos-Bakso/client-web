@@ -2,7 +2,6 @@
   <div id="app">
     <div id="nav">
       <div v-if="this.$store.state.isLogin">
-
         <Header />
       </div>
     </div>

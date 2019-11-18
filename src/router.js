@@ -11,7 +11,15 @@ export default new Router({
     {
       path: '/',
       name: 'landing',
-      component: Landing
+      component: Landing,
+      beforeEnter: (to, from, next) => {
+        if(store.state.isLogin) {
+          localStorage.removeItem('token')
+          store.commit('SET_LOGIN', false)
+          next()
+        }
+        else next()
+      }
     },
     {
       path: '/dashboard',

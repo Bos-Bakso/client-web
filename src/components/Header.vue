@@ -7,14 +7,16 @@
       </div>
       <div class="user-info">
         <div class="user-icon" style="margin-left: 50px;">
-          <img :src="this.$store.state.imageBos" alt id="imgBos" />
+          <img :src="this.$store.state.imageBos || imageBos" alt id="imgBos" v-popover:logout />
         </div>
         <div class="btn">
           <h4>Bell</h4>
         </div>
-        <div class="btn" @click="logout()">
+
+        <popover name="logout" class="btn" >
           <router-link to="/">Logout</router-link>
-        </div>
+        </popover>
+
         <div class="btn">
           <router-link to="/maps">Maps</router-link>
         </div>
@@ -28,13 +30,27 @@
 
 <script>
 import { Push } from "vue-burger-menu";
+import {verifyToken} from "../helpers/jwt"
+
 export default {
   props: ["titleCard"],
+  data: function() {
+    return {
+      imageBos: null,
+    }
+  },
   components: { Push },
   methods: {
     logout() {
+      console.log('HALO')
       localStorage.removeItem("token");
       this.$store.commit("SET_LOGIN", false);
+    },
+  },
+  created() {
+    if(localStorage.getItem('token')) {
+      const user = verifyToken(localStorage.getItem('token'))
+      this.imageBos = user.image 
     }
   }
 };
@@ -92,5 +108,19 @@ h4.main-title {
   width: 60px;
   height: 100%;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
+
 }
+
+#imgBos:hover {
+  cursor: pointer;
+}
+
+/* div[data-popover="logout"] {
+  background: #444;
+  color: #f9f9f9;
+
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 5px;
+} */
 </style>
