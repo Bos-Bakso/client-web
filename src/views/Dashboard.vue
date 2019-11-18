@@ -287,9 +287,7 @@ export default {
 }
 
 #topAbang {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  height: 390px;
+  overflow: auto;
 }
 </style>

@@ -1,38 +1,26 @@
 <template>
   <div class="header">
-    
     <div class="info">
       <div class="title-header">
-        <img src="../../assets/bowl.png" alt="" style="width: 60px; height: 100%; margin-right: 20px;">
+        <img src="../../assets/bowl.png" alt style="width: 60px; height: 100%; margin-right: 20px;" />
         <h4 class="main-title">BosBaso</h4>
       </div>
       <div class="user-info">
         <div class="user-icon" style="margin-left: 50px;">
-            <img :src="this.$store.state.imageBos" alt="" id="imgBos">
+          <img :src="this.$store.state.imageBos" alt id="imgBos" />
         </div>
-        <div id="notif">
+        <div class="btn">
           <h4>Bell</h4>
-          <div>
-          </div>
         </div>
-      </div>
-    </div>
-
-    <div class="welcome">
-      <div class="btn">
-        <router-link to="/dashboard">Dashboard</router-link>
-      </div>
-
-      <div class="btn">
-        <router-link to="/maps">Maps</router-link>
-      </div>
-
-      <div class="btn">
-        <router-link to="/add">Add Abang</router-link>
-      </div>
-
-      <div class="btn" @click="logout()">
-        <router-link to="/">Logout</router-link>
+        <div class="btn" @click="logout()">
+          <router-link to="/">Logout</router-link>
+        </div>
+        <div class="btn">
+          <router-link to="/maps">Maps</router-link>
+        </div>
+        <div class="btn">
+          <router-link to="/dashboard">Dashboard</router-link>
+        </div>
       </div>
     </div>
   </div>
@@ -45,8 +33,8 @@ export default {
   components: { Push },
   methods: {
     logout() {
-      localStorage.removeItem('token')
-      this.$store.commit('SET_LOGIN', false)
+      localStorage.removeItem("token");
+      this.$store.commit("SET_LOGIN", false);
     }
   }
 };
@@ -54,7 +42,7 @@ export default {
 
 <style>
 .header {
-  height: 14vh;
+  height: 7vh;
   width: 100%;
   background: #ffffff;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
@@ -79,11 +67,10 @@ h4.main-title {
 }
 
 .user-info {
-  width: 30%;
+  width: 50%;
   display: flex;
   flex-direction: row-reverse;
   justify-content: right;
-
   align-items: center;
 }
 

@@ -7,7 +7,7 @@ import {verifyToken} from "../helpers/jwt"
 
 Vue.use(Vuex)
 
-const baseUrl = 'http://34.87.107.88';
+const baseUrl = 'http://35.185.180.235';
 
 export default new Vuex.Store({
   state: {
@@ -32,6 +32,7 @@ export default new Vuex.Store({
   },
   actions: {
     login(context, payload) {
+      console.log('halos')
       return new Promise((resolve, reject) => {
 
         axios({
@@ -85,15 +86,20 @@ export default new Vuex.Store({
       })
     },
     addAbang(context, payload) {
-      axios({
-        method: 'POST',
-        url: `${baseUrl}/user/add/`,
-        headers: {
-          token: localStorage.getItem('token')
-        }
-      })
-      .then(_ => {
-        
+      console.log(payload)
+      return new Promise((resolve, reject) => {
+        axios({
+          method: 'POST',
+          url: `${baseUrl}/user/add/`,
+          data: payload,
+          headers: {
+            token: localStorage.getItem('token')
+          }
+        })
+        .then(_ => {
+          resolve()
+        })
+        .catch(console.log)
       })
     },
     fetchTukangs(context, payload) {

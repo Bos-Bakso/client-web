@@ -5,12 +5,16 @@ import store from './store'
 
 import BootstrapVue from 'bootstrap-vue'
 
+
 import './assets/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 // Leaflet
 import { Icon } from 'leaflet'
 import 'leaflet/dist/leaflet.css'
+
+// vue-toasted
+import Toasted from 'vue-toasted';
 
 delete Icon.Default.prototype._getIconUrl
 Icon.Default.mergeOptions({
@@ -20,6 +24,7 @@ Icon.Default.mergeOptions({
 })
 
 Vue.use(BootstrapVue)
+Vue.use(Toasted)
 
 Vue.config.productionTip = false
 

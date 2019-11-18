@@ -3,7 +3,7 @@
 ">
     <div class="myCard">
       <div class="myInfo">
-        <img :src="abanginfo.image" alt="">
+        <img :src="abanginfo.image" alt="" style="object-fit: cover;">
         <h4>{{abanginfo.username}}</h4>
       </div>
       <div class="rank">
