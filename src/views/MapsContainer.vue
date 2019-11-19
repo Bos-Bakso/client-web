@@ -39,12 +39,20 @@
               </div>
               <div class="topAbang" style="width: 100%;">
                 <form @submit.prevent="newAbang" class="myForm">
+                  <div>
                   <input class="form-control" v-model="username" type="text" placeholder="Username" />
+                  </div>
                   <input
                     class="form-control"
                     v-model="password"
                     type="password"
                     placeholder="Password"
+                  />
+                  <input
+                    class="form-control"
+                    v-model="facebook"
+                    type="text"
+                    placeholder="Facebook"
                   />
                   <form id="img-form" action="/profile" method="post" enctype="multipart/form-data">
                     <input
@@ -81,7 +89,8 @@ export default {
       username: "",
       password: "",
       image: "",
-      loading: false
+      facebook: "",
+      loading: false,
     };
   },
   methods: {
@@ -110,20 +119,23 @@ export default {
 
       formData.append('username', this.username)
       formData.append('password', this.password)
+      formData.append('facebook', this.facebook)
       formData.append('image', this.image)
+      formData.append('role', "baso")
 
       this.$store.dispatch("addAbang", formData)
         .then(_ => {
           this.loading = false
           this.username = ""
           this.password = ""
+          this.facebook = ""
           
           this.getAbang()
           this.showForm = false
           this.$toasted.show("New Abang Added", {
             theme: "outline",
             position: "top-right",
-            duration: 3000,
+            duration: 4000,
             type: "success",
           });
         })
