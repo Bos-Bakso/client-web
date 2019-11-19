@@ -15,6 +15,7 @@ export default new Vuex.Store({
     listAbangBakso: [],
     tukangs: [],
     imageBos: null,
+    rankAbang: []
   },
   mutations: {
     SET_LOGIN(state, data) {
@@ -28,6 +29,9 @@ export default new Vuex.Store({
     },
     SET_BOS_IMAGE(state, data) {
       state.imageBos = data
+    },
+    SET_RANK_ABANG(state, data) {
+      state.rankAbang = data
     }
   },
   actions: {
@@ -116,6 +120,17 @@ export default new Vuex.Store({
         })
         .catch(console.log)
     },
+    fetchRank(context, payload) {
+      axios({
+        method: 'GET',
+        url: `${baseUrl}/rank`,
+      })
+      .then(({data}) => {
+        console.log(data.rank.rank)
+        context.commit('SET_RANK_ABANG', data.rank.rank)
+      })
+      .catch(console.log)
+    }
   },
   modules: {}
 })

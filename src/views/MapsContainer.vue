@@ -122,7 +122,7 @@ export default {
           this.showForm = false
           this.$toasted.show("New Abang Added", {
             theme: "outline",
-            position: "bottom-right",
+            position: "top-right",
             duration: 3000,
             type: "success",
           });

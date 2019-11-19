@@ -4,7 +4,10 @@
     <div class="myCard">
       <div class="myInfo">
         <img :src="abanginfo.image" alt="" style="object-fit: cover;">
-        <h4>{{abanginfo.username}}</h4>
+        <div>
+          <h4>{{abanginfo.username}}</h4>
+          <p style="margin-left: 20px; font-size: 1.5rem; margin-top: 20px;">#{{rank+1}}</p>
+        </div>
       </div>
       <div class="rank">
         <div v-if="rank === 0">

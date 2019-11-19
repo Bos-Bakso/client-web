@@ -9,13 +9,10 @@
         <div class="user-icon" style="margin-left: 50px;">
           <img :src="this.$store.state.imageBos || imageBos" alt id="imgBos" v-popover:logout />
         </div>
-        <div class="btn">
-          <h4>Bell</h4>
+       
+       <div class="btn">
+          <router-link to="/service">Request Service  <span v-if="showNotif" class="badge badge-danger badge-lg" style="font-size: 15px;"> {{notifCount}}</span></router-link>
         </div>
-
-        <popover name="logout" class="btn" >
-          <router-link to="/">Logout</router-link>
-        </popover>
 
         <div class="btn">
           <router-link to="/maps">Maps</router-link>
@@ -25,33 +22,46 @@
         </div>
       </div>
     </div>
+    <popover name="logout" class="btn">
+      <router-link to="/">Logout</router-link>
+    </popover>
   </div>
 </template>
 
 <script>
 import { Push } from "vue-burger-menu";
-import {verifyToken} from "../helpers/jwt"
+import { verifyToken } from "../helpers/jwt";
+import {TriggerNotif} from "@/api/firebase"
 
 export default {
   props: ["titleCard"],
   data: function() {
     return {
       imageBos: null,
-    }
+      notifCount: -1,
+      showNotif: false
+    };
   },
-  components: { Push },
+  components: { },
   methods: {
     logout() {
-      console.log('HALO')
+      console.log("HALO");
       localStorage.removeItem("token");
       this.$store.commit("SET_LOGIN", false);
-    },
+    }
   },
   created() {
-    if(localStorage.getItem('token')) {
-      const user = verifyToken(localStorage.getItem('token'))
-      this.imageBos = user.image 
+    if (localStorage.getItem("token")) {
+      const user = verifyToken(localStorage.getItem("token"));
+      this.imageBos = user.image;
     }
+
+
+    TriggerNotif
+      .onSnapshot((querySnapshot) => {  
+         
+      })
+
   }
 };
 </script>
@@ -108,7 +118,6 @@ h4.main-title {
   width: 60px;
   height: 100%;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
-
 }
 
 #imgBos:hover {

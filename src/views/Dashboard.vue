@@ -67,7 +67,7 @@
                 <h4 id="chart-title" style="margin-bottom: 25px;">Top Abang</h4>
                 <div class="topAbang" id="style-3">
                   <TopAbang
-                    v-for="(abang, index) in topRankAbang"
+                    v-for="(abang, index) in this.$store.state.rankAbang"
                     :key="abang._id"
                     :abanginfo="abang"
                     :rank="index"
@@ -89,6 +89,7 @@ import SalesChart from "../components/SalesChart";
 import Maps from "../components/Maps";
 import ListAbang from "../components/ListLoginAbang";
 import TopAbang from "../components/TopRankAbang";
+import {TriggerRank} from "@/api/firebase"
 
 export default {
   components: { SalesChart, Maps, ListAbang, TopAbang },
@@ -139,6 +140,13 @@ export default {
         this.totalIncome = data.penjualanBakso.length * 15000;
         this.listAbang(this.listabangs, this.lisTransactions);
       });
+
+    TriggerRank
+      .onSnapshot((querySnapshot) => {
+        console.log(querySnapshot)  
+        this.$store.dispatch('fetchRank')
+      })
+      
   },
   computed: {
     nFormatter: function() {
