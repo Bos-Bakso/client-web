@@ -8,7 +8,9 @@
         <div class="content">
           <h4>{{serviceInfo.problem}}</h4>
           <h5>reported by : {{serviceInfo.tukangBasoId.username}}</h5>
-          <h5><strong>{{serviceInfo.createdAt}}</strong></h5>
+          <h5>
+            <strong>{{serviceInfo.createdAt}}</strong>
+          </h5>
           <!-- <h5 class="vsmall">Location</h5> -->
         </div>
         <img :src="serviceInfo.tukangBasoId.image" />
@@ -39,25 +41,25 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       //   icon: require("../../assets/service/police.png")
       //   icon: `${process.env.BASE_URL}../../assets/service/police.png`
       icon: {
-        "Police Issue": require(`../../assets/service/police.png`),
-        "Tire Issue": require(`../../assets/service/ban.png`),
-        "Less Ingredient": require(`../../assets/service/sauce.png`),
-        "Low Battery": require(`../../assets/service/battery.png`),
+        'Police Issue': require(`../../assets/service/police.png`),
+        'Tire Issue': require(`../../assets/service/ban.png`),
+        'Less Ingredient': require(`../../assets/service/sauce.png`),
+        'Low Battery': require(`../../assets/service/battery.png`),
         Medice: require(`../../assets/service/medice.png`),
-        "Edit Profile": require(`../../assets/service/user.png`),
+        'Edit Profile': require(`../../assets/service/user.png`),
         Service: require(`../../assets/service/teknik.png`),
-        "Gas Issue" : require(`../../assets/service/gas.png`)
+        'Gas Issue': require(`../../assets/service/gas.png`)
       }
-    };
+    }
   },
-  props: ["serviceInfo"],
+  props: ['serviceInfo'],
   computed: {}
-};
+}
 </script>
 
 <style scoped>
@@ -93,7 +95,7 @@ export default {
 }
 
 .myInfo h4 {
-  text-align: center;
+  text-align: left;
   font-size: 1.5rem;
   font-weight: bold;
 }
@@ -106,18 +108,20 @@ export default {
   margin-right: 4vh;
   width: 70%;
 }
-h5,h4,p {
-    margin: 0;
+h5,
+h4,
+p {
+  margin: 0;
 }
-.vsmall{
-    padding : .5vh 1vh;
-    cursor: pointer;
-    margin : .5vh;
-    background-color: aqua;
-    border-radius: 5px;
-    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
+.vsmall {
+  padding: 0.5vh 1vh;
+  cursor: pointer;
+  margin: 0.5vh;
+  background-color: aqua;
+  border-radius: 5px;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
 }
-.vsmall:hover{
-    background-color: whitesmoke;
+.vsmall:hover {
+  background-color: whitesmoke;
 }
 </style>

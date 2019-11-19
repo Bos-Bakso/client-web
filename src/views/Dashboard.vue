@@ -47,7 +47,7 @@
 
     <!-- Chart -->
     <div class="row">
-      <div class="col-md-8" style="height: 600px">
+      <div class="col-md-8" style="height: 500px">
         <div class="card">
           <div class="card-header" style="font-size: 18px">Sales Chart</div>
           <SalesChart />
