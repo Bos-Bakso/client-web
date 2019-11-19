@@ -41,22 +41,6 @@ export default {
       url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-      // tukangs: [
-      //   {
-      //     name: 'bambang',
-      //     lat: -6.2607371,
-      //     lng: 106.7815033,
-      //     icon:
-      //       'https://i2.wp.com/www.coachcarson.com/wp-content/uploads/2018/09/Chad-Profile-pic-circle.png?ssl=1'
-      //   },
-      //   {
-      //     name: 'sono',
-      //     lat: -6.2607471,
-      //     lng: 106.7715433,
-      //     icon:
-      //       'https://www.iphonesavvy.com/sites/default/files/%5Bcurrent-date%3Afile_path%5D/jan-profile-circle.png'
-      //   }
-      // ],
       currentZoom: 13,
       currentCenter: latLng(-6.2607371, 106.7815033),
       showParagraph: false,

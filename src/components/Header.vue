@@ -1,24 +1,37 @@
 <template>
   <div class="header">
-    <div class="info">
-      <div class="title-header">
-        <img src="../../assets/bowl.png" alt style="width: 60px; height: 100%; margin-right: 20px;" />
-        <h4 class="main-title">BosBaso</h4>
-      </div>
-      <div class="user-info">
-        <div class="user-icon" style="margin-left: 50px;">
-          <img :src="this.$store.state.imageBos || imageBos" alt id="imgBos" v-popover:logout />
+    <div class="container">
+      <div class="info">
+        <div class="title-header">
+          <img
+            src="../../assets/bowl.png"
+            alt
+            style="width: 60px; height: 100%; margin-right: 20px;"
+          />
+          <h4 class="main-title">BosBaso</h4>
         </div>
-       
-       <div class="btn">
-          <router-link to="/service">Request Service  <span v-if="showNotif" class="badge badge-danger badge-lg" style="font-size: 15px;"> {{notifCount}}</span></router-link>
-        </div>
+        <div class="user-info">
+          <div class="user-icon" style="margin-left: 50px;">
+            <img :src="this.$store.state.imageBos || imageBos" alt id="imgBos" v-popover:logout />
+          </div>
 
-        <div class="btn">
-          <router-link to="/maps">Maps</router-link>
-        </div>
-        <div class="btn">
-          <router-link to="/dashboard">Dashboard</router-link>
+          <div class="btn">
+            <router-link to="/service">
+              Request Service
+              <span
+                v-if="showNotif"
+                class="badge badge-danger badge-lg"
+                style="font-size: 15px;"
+              >{{notifCount}}</span>
+            </router-link>
+          </div>
+
+          <div class="btn">
+            <router-link to="/maps">Maps</router-link>
+          </div>
+          <div class="btn">
+            <router-link to="/dashboard">Dashboard</router-link>
+          </div>
         </div>
       </div>
     </div>
@@ -29,58 +42,51 @@
 </template>
 
 <script>
-import { Push } from "vue-burger-menu";
-import { verifyToken } from "../helpers/jwt";
-import {TriggerNotif} from "@/api/firebase"
+import { Push } from 'vue-burger-menu';
+import { verifyToken } from '../helpers/jwt';
+import { TriggerNotif } from '@/api/firebase';
 
 export default {
-  props: ["titleCard"],
-  data: function() {
+  props: ['titleCard'],
+  data: function () {
     return {
       imageBos: null,
       notifCount: -1,
       showNotif: false
-    };
+    }
   },
-  components: { },
+  components: {},
   methods: {
-    logout() {
-      console.log("HALO");
-      localStorage.removeItem("token");
-      this.$store.commit("SET_LOGIN", false);
+    logout () {
+      console.log('HALO')
+      localStorage.removeItem('token')
+      this.$store.commit('SET_LOGIN', false)
     }
   },
-  created() {
-    if (localStorage.getItem("token")) {
-      const user = verifyToken(localStorage.getItem("token"));
-      this.imageBos = user.image;
+  created () {
+    if (localStorage.getItem('token')) {
+      const user = verifyToken(localStorage.getItem('token'))
+      this.imageBos = user.image
     }
 
-
-    TriggerNotif
-      .onSnapshot((querySnapshot) => {  
-         
-      })
-
+    TriggerNotif.onSnapshot(querySnapshot => {})
   }
-};
+}
 </script>
 
 <style>
 .header {
-  height: 7vh;
+  height: 60px;
   width: 100%;
   background: #ffffff;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
 }
 
 .info {
-  height: 7vh;
-  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
+  height: 60px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 23rem;
 }
 
 .title-header {
@@ -115,8 +121,7 @@ h4.main-title {
 
 #imgBos {
   border-radius: 50%;
-  width: 60px;
-  height: 100%;
+  height: 45px;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
 }
 
