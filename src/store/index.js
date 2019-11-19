@@ -15,7 +15,9 @@ export default new Vuex.Store({
     listAbangBakso: [],
     tukangs: [],
     imageBos: null,
-    rankAbang: []
+    rankAbang: [],
+    service: [],
+    abangService: []
   },
   mutations: {
     SET_LOGIN(state, data) {
@@ -32,6 +34,12 @@ export default new Vuex.Store({
     },
     SET_RANK_ABANG(state, data) {
       state.rankAbang = data
+    },
+    SET_SERVICE(state, data){
+      state.service = data
+    },
+    SET_ABANG_SERVICE(state, data){
+      state.abangService = data
     }
   },
   actions: {
@@ -130,6 +138,58 @@ export default new Vuex.Store({
         context.commit('SET_RANK_ABANG', data.rank.rank)
       })
       .catch(console.log)
+    },
+    fetchService(context, payload){
+      return new Promise(function(resolve,reject){
+        axios({
+          method: 'GET',
+          url : `${baseUrl}/service`,
+          headers: {
+            token: localStorage.getItem('token')
+          }
+        })
+        .then(({data})=> {
+          context.commit('SET_SERVICE', data.service)
+          resolve()
+        })
+        .catch(err => {
+          reject(err)
+        })
+      })
+    },
+    fetchAbangService(context, payload){
+      axios({
+        method: 'GET',
+        url : `${baseUrl}/user`
+      })
+      .then(({data}) => {
+        const abangService = data.filter(abangs => {
+          return abangs.role === 'service'
+        })
+        context.commit('SET_ABANG_SERVICE', abangService)
+      })
+      .catch(err => {
+        console.log(err.response)
+      })
+    },
+    addAbangService(context, payload){
+      return new Promise(function(resolve,reject){
+        axios({
+          method: "POST",
+          url : `${baseUrl}/user/add`,
+          headers: {
+            token : localStorage.getItem('token')
+          },
+          data: payload
+        })
+        .then(({data}) => {
+          console.log(data)
+          resolve()
+        })
+        .catch(err=>{ 
+          reject(err)
+        })
+      })
     }
   },
   modules: {}
