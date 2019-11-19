@@ -43,5 +43,16 @@ export default new Router({
         else next('/')
       }
     },
+    {
+      path: '/service',
+      name : 'service',
+      component: () => import('./views/ServiceAbang.vue'),
+      beforeEnter: (to, from, next) => {
+        if(store.state.isLogin) {
+          next()
+        }
+        else next('/')
+      }
+    }
   ]
 })
