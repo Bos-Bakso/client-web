@@ -5,32 +5,32 @@
         <Header />
       </div>
     </div>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
 <script>
-import Header from './components/Header'
+import Header from './components/Header';
 export default {
-  components: {Header}
+  components: { Header }
 }
 </script>
 
 <style>
-  *{
-    font-size: 62.5%;
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
+* {
+  font-size: 62.5%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-  a {
+a {
   text-decoration: none !important;
 }
 
-  #app {
-    background: #F6F6F6;
-    width: 100%;
-    min-height: 100vh;
-  }
+#app {
+  background: #f6f6f6;
+  width: 100%;
+  min-height: 100vh;
+}
 </style>

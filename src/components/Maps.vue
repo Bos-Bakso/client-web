@@ -16,7 +16,19 @@
         :lat-lng="latLng(tukang.latitude, tukang.longitude)"
         :icon="icon(tukang.image)"
         @click="innerClick(latLng(tukang.latitude, tukang.longitude))"
-      ></l-marker>
+      >
+        <l-popup>
+          <div class="messenger">
+            <a :href="'https://m.me/' + tukang.facebook" target="_blank">
+              <img
+                src="https://cdn2.iconfinder.com/data/icons/social-icons-33/128/Facebook_Messenger-512.png"
+                alt
+                width="30px"
+              />
+            </a>
+          </div>
+        </l-popup>
+      </l-marker>
     </l-map>
   </div>
 </template>
@@ -54,8 +66,8 @@ export default {
     icon (url) {
       return icon({
         iconUrl: url,
-        iconSize: [30, 30],
-        iconAnchor: [30, 30]
+        iconSize: [40, 40],
+        iconAnchor: [20, 5]
       })
     },
     latLng (lat, lng) {
@@ -94,3 +106,9 @@ export default {
   }
 }
 </script>
+
+<style>
+.messenger {
+  cursor: pointer;
+}
+</style>

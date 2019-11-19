@@ -1,14 +1,11 @@
 <template>
-  <div class="container-fluid" style="margin-top: 10.5rem; overflow: hidden;">
-    <!-- MAPS -->
-    <div class="row maps-container">
-      <div class="col-md-6">
-        <div class="card">
-          <Maps style="height: 70vh;" />
-        </div>
+  <div class="container">
+    <div class="row" style="margin-top: 80px">
+      <div class="col-md-8">
+        <Maps style="height: 550px;" ref="maps" />
       </div>
-      <div class="col-md-3">
-        <div class="card" style="height: 70vh; padding: 2rem;">
+      <div class="col-md-4">
+        <div class="card" style="height: 550px; padding: 2rem;">
           <transition name="fade">
             <div v-if="showForm === false">
               <div class="top">
@@ -18,12 +15,23 @@
               <div class="addAbang">
                 <div class="btn btn-warning btn-sm add-btn" @click="addAbang">Add +</div>
               </div>
-              <div class="topAbang" id="style-3" style="width: 100%; height: 500px; overflow: auto;">
+              <div
+                class="topAbang"
+                id="style-3"
+                style="width: 100%; height: 400px; overflow: auto;"
+              >
                 <div v-if="filter().length === 0">
                   <p id="notFound">Abang not found</p>
                 </div>
                 <div v-else>
-                  <ListAbang  style="width: 99%;" v-for="abang in filter()" :key="abang._id" :abanginfo="abang" />
+                  <div
+                    class="list-abang"
+                    v-for="abang in filter()"
+                    :key="abang._id"
+                    @click="detail(abang.latitude, abang.longitude)"
+                  >
+                    <ListAbang style="width: 99%;" :abanginfo="abang" />
+                  </div>
                 </div>
               </div>
             </div>
@@ -40,7 +48,12 @@
               <div class="topAbang" style="width: 100%;">
                 <form @submit.prevent="newAbang" class="myForm">
                   <div>
-                  <input class="form-control" v-model="username" type="text" placeholder="Username" />
+                    <input
+                      class="form-control"
+                      v-model="username"
+                      type="text"
+                      placeholder="Username"
+                    />
                   </div>
                   <input
                     class="form-control"
@@ -48,12 +61,7 @@
                     type="password"
                     placeholder="Password"
                   />
-                  <input
-                    class="form-control"
-                    v-model="facebook"
-                    type="text"
-                    placeholder="Facebook"
-                  />
+                  <input class="form-control" v-model="facebook" type="text" placeholder="Facebook" />
                   <form id="img-form" action="/profile" method="post" enctype="multipart/form-data">
                     <input
                       type="file"
@@ -63,8 +71,15 @@
                       required
                     />
                   </form>
-                  <button  v-if="loading === false" @click.prevent="newAbang" type="submit" class="btn btn-primary">Submit</button>
-                  <button v-else type="submit"  @click.prevent="" class="btn btn-primary"><i class="fas fa-spinner fa-pulse" style="font-size: 1.5rem;"></i></button>
+                  <button
+                    v-if="loading === false"
+                    @click.prevent="newAbang"
+                    type="submit"
+                    class="btn btn-primary"
+                  >Submit</button>
+                  <button v-else type="submit" @click.prevent class="btn btn-primary">
+                    <i class="fas fa-spinner fa-pulse" style="font-size: 1.5rem;"></i>
+                  </button>
                 </form>
               </div>
             </div>
@@ -76,44 +91,49 @@
 </template>
 
 <script>
-import Maps from "../components/Maps";
-import ListAbang from "../components/ListLoginAbang";
-import Search from "../components/Search";
+import { latLng } from 'leaflet';
+import Maps from '../components/Maps';
+import ListAbang from '../components/ListLoginAbang';
+import Search from '../components/Search';
 
 export default {
   components: { Maps, ListAbang, Search },
-  data: function() {
+  data: function () {
     return {
       showForm: false,
-      searchtext: "",
-      username: "",
-      password: "",
-      image: "",
-      facebook: "",
-      loading: false,
-    };
+      searchtext: '',
+      username: '',
+      password: '',
+      image: '',
+      facebook: '',
+      loading: false
+    }
   },
   methods: {
-    search(value) {
-      this.searchtext = value;
+    detail (lat, lng) {
+      let loc = latLng(lat, lng)
+      this.$refs.maps.innerClick(loc)
     },
-    filter() {
-      let regex = new RegExp(`^${this.searchtext}`);
+    search (value) {
+      this.searchtext = value
+    },
+    filter () {
+      let regex = new RegExp(`^${this.searchtext}`)
       let filtered = this.$store.state.tukangs.filter(abang => {
-        return regex.test(abang.username.toLowerCase());
-      });
-      return filtered;
+        return regex.test(abang.username.toLowerCase())
+      })
+      return filtered
     },
-    addAbang() {
-      this.showForm = true;
+    addAbang () {
+      this.showForm = true
     },
-    cancelAdd() {
-      this.showForm = false;
+    cancelAdd () {
+      this.showForm = false
     },
-    handleimage() {
-      this.image = this.$refs.image.files[0];
+    handleimage () {
+      this.image = this.$refs.image.files[0]
     },
-    newAbang() {
+    newAbang () {
       this.loading = true
       let formData = new FormData()
 
@@ -121,33 +141,35 @@ export default {
       formData.append('password', this.password)
       formData.append('facebook', this.facebook)
       formData.append('image', this.image)
-      formData.append('role', "baso")
+      formData.append('role', 'baso')
 
-      this.$store.dispatch("addAbang", formData)
-        .then(_ => {
-          this.loading = false
-          this.username = ""
-          this.password = ""
-          this.facebook = ""
-          
-          this.getAbang()
-          this.showForm = false
-          this.$toasted.show("New Abang Added", {
-            theme: "outline",
-            position: "top-right",
-            duration: 4000,
-            type: "success",
-          });
+      this.$store.dispatch('addAbang', formData).then(_ => {
+        this.loading = false
+        this.username = '';
+        this.password = '';
+        this.facebook = '';
+
+        this.getAbang()
+        this.showForm = false
+        this.$toasted.show('New Abang Added', {
+          theme: 'outline',
+          position: 'top-right',
+          duration: 4000,
+          type: 'success'
         })
+      })
     },
-    getAbang() {
+    getAbang () {
       this.$store.dispatch('fetchTukangs')
     }
   }
-};
+}
 </script>
 
 <style>
+.list-abang {
+  cursor: pointer;
+}
 .highlight-info {
   display: flex;
   justify-content: center;
@@ -192,7 +214,7 @@ form {
 }
 
 .myForm {
-  height: 50vh;
+  /* height: 50vh; */
 }
 
 .myForm input,
@@ -212,20 +234,17 @@ button {
   opacity: 0;
 }
 
-#style-3::-webkit-scrollbar-track
-{
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	background-color: #F5F5F5;
+#style-3::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #f5f5f5;
 }
 
-#style-3::-webkit-scrollbar
-{
-	width: 6px;
-	background-color: #F5F5F5;
+#style-3::-webkit-scrollbar {
+  width: 6px;
+  background-color: #f5f5f5;
 }
 
-#style-3::-webkit-scrollbar-thumb
-{
-	background-color: #000000;
+#style-3::-webkit-scrollbar-thumb {
+  background-color: #000000;
 }
 </style>
