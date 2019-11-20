@@ -50,7 +50,7 @@
       <div class="col-md-8" style="height: 500px">
         <div class="card">
           <div class="card-header" style="font-size: 18px">Sales Chart</div>
-          <SalesChart />
+          <SalesChart/>
         </div>
       </div>
       <div class="col-md-4">
