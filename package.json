@@ -14,7 +14,7 @@
     "chart.js": "^2.9.3",
     "core-js": "^2.6.10",
     "firebase": "^7.4.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "leaflet": "^1.5.1",
     "socket.io": "^2.3.0",
     "vue": "^2.6.10",
